@@ -1,5 +1,7 @@
 package com.example.gpb.services;
 
+import com.example.gpb.factories.ResponseFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -11,37 +13,22 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class BotService extends TelegramLongPollingBot {
 
     private final String botName;
+    private final ResponseFactory responseFactory;
 
-    public BotService(@Value("${bot.token}") String token, @Value("${bot.name}") String botName) {
+    @Autowired
+    public BotService(@Value("${bot.token}") String token, @Value("${bot.name}") String botName,
+                      ResponseFactory responseFactory) {
         super(token);
         this.botName = botName;
+        this.responseFactory = responseFactory;
     }
 
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
-            var id = update.getMessage().getChatId();
-            var message = update.getMessage().getText();
             var newMessage = new SendMessage();
-            newMessage.setChatId(id);
-            if (message.equals("/ping")) {
-                newMessage.setText("pong");
-                try {
-                    sendApiMethod(newMessage);
-                } catch (TelegramApiException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                newMessage.setText("WRONG MESSAGE BUDDY");
-                try {
-                    sendApiMethod(newMessage);
-                } catch (TelegramApiException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        } else {
-            var newMessage = new SendMessage();
-            newMessage.setText("SOME WORDS PLEASE");
+            newMessage.setChatId(update.getMessage().getChatId());
+            newMessage.setText(responseFactory.respMessage(update.getMessage()));
             try {
                 sendApiMethod(newMessage);
             } catch (TelegramApiException e) {
