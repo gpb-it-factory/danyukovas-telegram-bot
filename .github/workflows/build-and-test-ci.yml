@@ -1,0 +1,31 @@
+name: Build and Test app
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - closed
+      - reopened
+    branches:
+    - 'feature/**'
+
+jobs:
+  build-and-test:
+    name: Build and test telegram-bot app
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
+  #  - name: Test with Gradle
+  #    run: ./gradlew test
