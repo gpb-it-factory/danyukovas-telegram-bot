@@ -11,7 +11,7 @@ public class GpbApplication {
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(GpbApplication.class);
-		app.setDefaultProperties(Collections.singletonMap("server.port", "7070"));
+		app.setDefaultProperties(Collections.singletonMap("server.port", "8086"));
 		app.run(args);
 
 	}
