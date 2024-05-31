@@ -3,11 +3,16 @@ package com.example.gpb;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Collections;
+import java.util.stream.Collectors;
+
 @SpringBootApplication
 public class GpbApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GpbApplication.class, args);
+		SpringApplication app = new SpringApplication(GpbApplication.class);
+		app.setDefaultProperties(Collections.singletonMap("server.port", "7070"));
+		app.run(args);
 
 	}
 
