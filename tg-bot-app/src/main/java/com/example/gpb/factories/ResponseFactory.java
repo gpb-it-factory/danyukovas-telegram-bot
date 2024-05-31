@@ -9,14 +9,13 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public class ResponseFactory {
 
     private static final String URI = "http://localhost:8080/api/users";
-
+  
     private final MiddleServiceUserGateway middleGateway;
 
     @Autowired
     public ResponseFactory(MiddleServiceUserGateway middleGateway) {
         this.middleGateway = middleGateway;
     }
-
     public String respMessage(Message message) {
         return switch (message.getText()) {
             case "/start" -> "Hello " + message.getChat().getFirstName();
