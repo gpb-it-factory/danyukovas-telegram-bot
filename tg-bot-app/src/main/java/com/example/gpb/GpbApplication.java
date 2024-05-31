@@ -2,7 +2,6 @@ package com.example.gpb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.util.Collections;
 import java.util.stream.Collectors;
 
@@ -13,7 +12,5 @@ public class GpbApplication {
 		SpringApplication app = new SpringApplication(GpbApplication.class);
 		app.setDefaultProperties(Collections.singletonMap("server.port", "8086"));
 		app.run(args);
-
 	}
-
 }
