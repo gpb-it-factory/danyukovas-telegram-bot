@@ -1,5 +1,6 @@
 package com.example.gpb.gateways;
 
+import com.example.gpb.exceptions.ResourceAccessExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,12 @@ public class MiddleServiceUserGateway {
     }
 
     public String postRegisterUser(String uri, Message message) {
-        ResponseEntity<?> response = restTemplate.postForEntity(uri, message.getChat().getFirstName(), String.class);
+        ResponseEntity<?> response;
+        try {
+            response = restTemplate.postForEntity(uri, message.getChat().getFirstName(), String.class);
+        } catch (ResourceAccessException e) {
+            return new ResourceAccessExceptionHandler().handlerException();
+        }
         if (response.getStatusCode() == HttpStatus.OK) {
             return (String) response.getBody();
         }
