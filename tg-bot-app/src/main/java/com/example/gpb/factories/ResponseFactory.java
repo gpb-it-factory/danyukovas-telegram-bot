@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public class ResponseFactory {
 
     private static final String URI = "http://localhost:8080/api/users";
-  
+
     private final MiddleServiceUserGateway middleGateway;
 
     @Autowired
@@ -17,12 +17,15 @@ public class ResponseFactory {
         this.middleGateway = middleGateway;
     }
     public String respMessage(Message message) {
-        return switch (message.getText()) {
-            case "/start" -> "Hello " + message.getChat().getFirstName();
-            case "/ping" -> "pong";
-            case "/register" ->
-                    middleGateway.postRegisterUser(URI, message);
-            default -> "WRONG MESSAGE BUDDY";
-        };
+        if (message.hasText()) {
+            return switch (message.getText()) {
+                case "/start" -> "Hello " + message.getChat().getFirstName();
+                case "/ping" -> "pong";
+                case "/register" ->
+                        middleGateway.postRegisterUser(URI, message);
+                default -> "WRONG MESSAGE BUDDY";
+            };
+        }
+        return "Application can take only text!";
     }
 }
