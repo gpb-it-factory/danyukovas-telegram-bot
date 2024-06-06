@@ -1,5 +1,6 @@
 package com.example.gpb.gateways;
 
+import com.example.gpb.models.CreateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,8 @@ public class MiddleServiceUserGateway {
     }
 
     public String postRegisterUser(String uri, Message message) {
-        ResponseEntity<?> response = restTemplate.postForEntity(uri, message.getChat().getFirstName(), String.class);
+        var user = new CreateUserRequest(message.getChatId(), message.getChat().getFirstName());
+        ResponseEntity<?> response = restTemplate.postForEntity(uri, user, String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
             return (String) response.getBody();
         }
