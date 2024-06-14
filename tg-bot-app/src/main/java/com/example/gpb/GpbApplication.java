@@ -2,8 +2,8 @@ package com.example.gpb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class GpbApplication {
