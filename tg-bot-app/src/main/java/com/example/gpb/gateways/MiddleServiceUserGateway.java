@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
 public class MiddleServiceUserGateway {
@@ -18,11 +17,10 @@ public class MiddleServiceUserGateway {
         this.restClient = restClient;
     }
 
-    public String postRegisterUser(String uri, Message message) {
-        var user = new CreateUserRequest(message.getChatId(), message.getChat().getFirstName());
+    public String postRegisterUser(String uri, CreateUserRequest userRequest) {
         ResponseEntity<String> response = restClient.post()
                 .uri(uri)
-                .body(user)
+                .body(userRequest)
                 .retrieve().toEntity(String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();

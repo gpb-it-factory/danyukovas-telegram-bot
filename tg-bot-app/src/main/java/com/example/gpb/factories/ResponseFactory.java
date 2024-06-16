@@ -1,31 +1,38 @@
 package com.example.gpb.factories;
 
-import com.example.gpb.gateways.MiddleServiceUserGateway;
+import com.example.gpb.handlers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
 public class ResponseFactory {
 
-    private static final String URI = "http://localhost:8080/api/users";
-
-    private final MiddleServiceUserGateway middleGateway;
+    private final StartCommand startCommand;
+    private final PingCommand pingCommand;
+    private final RegisterCommand registerCommand;
+    private final DeafaultCommand deafaultCommand;
+    private final WrongCommand wrongCommand;
 
     @Autowired
-    public ResponseFactory(MiddleServiceUserGateway middleGateway) {
-        this.middleGateway = middleGateway;
+    public ResponseFactory(StartCommand startCommand, PingCommand pingCommand,
+                           RegisterCommand registerCommand, DeafaultCommand deafaultCommand,
+                           WrongCommand wrongCommand) {
+        this.startCommand = startCommand;
+        this.pingCommand = pingCommand;
+        this.registerCommand = registerCommand;
+        this.deafaultCommand = deafaultCommand;
+        this.wrongCommand = wrongCommand;
     }
-    public String respMessage(Message message) {
-        if (message.hasText()) {
-            return switch (message.getText()) {
-                case "/start" -> "Hello " + message.getChat().getFirstName();
-                case "/ping" -> "pong";
-                case "/register" ->
-                        middleGateway.postRegisterUser(URI, message);
-                default -> "WRONG MESSAGE BUDDY";
+
+    public Command getCommand(String text) {
+        if (text != null) {
+            return switch (text) {
+                case "/start" -> startCommand;
+                case "/ping" -> pingCommand;
+                case "/register" -> registerCommand;
+                default -> deafaultCommand;
             };
         }
-        return "Application can take only text!";
+        return wrongCommand;
     }
 }

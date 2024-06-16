@@ -1,5 +1,6 @@
 package com.example.gpb.services;
 
+import com.example.gpb.handlers.CommandInvoker;
 import com.example.gpb.factories.ResponseFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,21 +15,25 @@ public class BotService extends TelegramLongPollingBot {
 
     private final String botName;
     private final ResponseFactory responseFactory;
+    private final CommandInvoker invoker;
 
     @Autowired
     public BotService(@Value("${bot.token}") String token, @Value("${bot.name}") String botName,
-                      ResponseFactory responseFactory) {
+                      ResponseFactory responseFactory, CommandInvoker invoker) {
         super(token);
         this.botName = botName;
         this.responseFactory = responseFactory;
+        this.invoker = invoker;
     }
 
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
+            var message = update.getMessage();
+            var text = message.getText();
             var newMessage = new SendMessage();
             newMessage.setChatId(update.getMessage().getChatId());
-            newMessage.setText(responseFactory.respMessage(update.getMessage()));
+            newMessage.setText(invoker.invokeCommand(responseFactory.getCommand(text), message));
             try {
                 sendApiMethod(newMessage);
             } catch (TelegramApiException e) {
