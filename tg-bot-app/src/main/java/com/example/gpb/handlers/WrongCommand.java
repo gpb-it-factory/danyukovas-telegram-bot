@@ -8,6 +8,6 @@ public class WrongCommand implements Command {
 
     @Override
     public String respMessage(Message message) {
-        return message.getChat().getUserName() + ", please, send only text!";
+        return "Invalid command, " + message.getChat().getUserName() + ", please, enter the correct one";
     }
 }

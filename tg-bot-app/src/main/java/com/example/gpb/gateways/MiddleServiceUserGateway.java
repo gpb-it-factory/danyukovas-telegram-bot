@@ -2,8 +2,6 @@ package com.example.gpb.gateways;
 
 import com.example.gpb.models.CreateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -18,13 +16,10 @@ public class MiddleServiceUserGateway {
     }
 
     public String postRegisterUser(String uri, CreateUserRequest userRequest) {
-        ResponseEntity<String> response = restClient.post()
+        return restClient.post()
                 .uri(uri)
                 .body(userRequest)
-                .retrieve().toEntity(String.class);
-        if (response.getStatusCode() == HttpStatus.OK) {
-            return response.getBody();
-        }
-        return "Пользователь успешно зарегистрирован";
+                .retrieve()
+                .body(String.class);
     }
 }

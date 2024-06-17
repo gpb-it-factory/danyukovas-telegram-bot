@@ -1,27 +1,28 @@
 package com.example.gpb.factories;
 
 import com.example.gpb.handlers.*;
+import com.example.gpb.handlers.Command;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ResponseFactory {
+public class CommandFactory {
 
     private final StartCommand startCommand;
     private final PingCommand pingCommand;
     private final RegisterCommand registerCommand;
-    private final DeafaultCommand deafaultCommand;
     private final WrongCommand wrongCommand;
+    private final NotTextCommand notTextCommand;
 
     @Autowired
-    public ResponseFactory(StartCommand startCommand, PingCommand pingCommand,
-                           RegisterCommand registerCommand, DeafaultCommand deafaultCommand,
-                           WrongCommand wrongCommand) {
+    public CommandFactory(StartCommand startCommand, PingCommand pingCommand,
+                          RegisterCommand registerCommand, WrongCommand wrongCommand,
+                          NotTextCommand notTextCommand) {
         this.startCommand = startCommand;
         this.pingCommand = pingCommand;
         this.registerCommand = registerCommand;
-        this.deafaultCommand = deafaultCommand;
         this.wrongCommand = wrongCommand;
+        this.notTextCommand = notTextCommand;
     }
 
     public Command getCommand(String text) {
@@ -30,9 +31,9 @@ public class ResponseFactory {
                 case "/start" -> startCommand;
                 case "/ping" -> pingCommand;
                 case "/register" -> registerCommand;
-                default -> deafaultCommand;
+                default -> wrongCommand;
             };
         }
-        return wrongCommand;
+        return notTextCommand;
     }
 }
