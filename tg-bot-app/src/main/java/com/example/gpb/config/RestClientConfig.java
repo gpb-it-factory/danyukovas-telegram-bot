@@ -48,5 +48,4 @@ public class RestClientConfig {
         factory.setHttpClient(httpClientBuilder());
         return RestClient.builder().requestFactory(factory).build();
     }
-
 }
