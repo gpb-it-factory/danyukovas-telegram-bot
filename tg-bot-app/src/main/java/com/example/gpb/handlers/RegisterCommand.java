@@ -16,9 +16,14 @@ public class RegisterCommand implements Command {
     private final MiddleServiceUserGateway middleGateway;
 
     @Autowired
-    public RegisterCommand(@Value("${register-uri}") String userRegisterUri, MiddleServiceUserGateway middleUserGateway) {
+    public RegisterCommand(@Value("${user.register-uri}") String userRegisterUri, MiddleServiceUserGateway middleUserGateway) {
         this.middleGateway = middleUserGateway;
         this.USER_REGISTER_URI = userRegisterUri;
+    }
+
+    @Override
+    public String getCommandName() {
+        return "/register";
     }
 
     @Override

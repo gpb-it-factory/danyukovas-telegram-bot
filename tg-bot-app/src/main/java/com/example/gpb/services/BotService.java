@@ -1,7 +1,6 @@
 package com.example.gpb.services;
 
 import com.example.gpb.handlers.Command;
-import com.example.gpb.handlers.CommandInvoker;
 import com.example.gpb.factories.CommandFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,15 +16,13 @@ public class BotService extends TelegramLongPollingBot {
 
     private final String botName;
     private final CommandFactory commandFactory;
-    private final CommandInvoker invoker;
 
     @Autowired
     public BotService(@Value("${bot.token}") String token, @Value("${bot.name}") String botName,
-                      CommandFactory commandFactory, CommandInvoker invoker) {
+                      CommandFactory commandFactory) {
         super(token);
         this.botName = botName;
         this.commandFactory = commandFactory;
-        this.invoker = invoker;
     }
 
     @Override
@@ -45,7 +42,7 @@ public class BotService extends TelegramLongPollingBot {
         Command command = commandFactory.getCommand(message.getText());
         return SendMessage.builder()
                 .chatId(message.getChatId())
-                .text(invoker.invokeCommand(command, message))
+                .text(command.respMessage(message))
                 .build();
     }
 

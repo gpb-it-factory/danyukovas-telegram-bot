@@ -20,10 +20,10 @@ public class RestClientConfig {
     public final int CONNECTION_TIMEOUT_MS;
     public final int REQUEST_TIMEOUT_MS;
 
-    public RestClientConfig(@Value("${maxConPerRoute}") int maxConPerRoute,
-                            @Value("${maxConTotal}") int maxConTotal,
-                            @Value("${connectionTimeoutMs}") int connectionTimeoutMs,
-                            @Value("${requestTimeoutMs}") int requestTimeoutMs) {
+    public RestClientConfig(@Value("${httpclient.maxConPerRoute}") int maxConPerRoute,
+                            @Value("${httpclient.maxConTotal}") int maxConTotal,
+                            @Value("${httpclient.connectionTimeoutMs}") int connectionTimeoutMs,
+                            @Value("${httpclient.requestTimeoutMs}") int requestTimeoutMs) {
         this.MAX_CON_PER_ROUTE = maxConPerRoute;
         this.MAX_CON_TOTAL = maxConTotal;
         this.CONNECTION_TIMEOUT_MS = connectionTimeoutMs;

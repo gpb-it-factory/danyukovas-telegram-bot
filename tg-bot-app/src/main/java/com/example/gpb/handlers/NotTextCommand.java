@@ -7,6 +7,11 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public class NotTextCommand implements Command {
 
     @Override
+    public String getCommandName() {
+        return "not_text";
+    }
+
+    @Override
     public String respMessage(Message message) {
         return message.getChat().getUserName() + ", please, send only text!";
     }

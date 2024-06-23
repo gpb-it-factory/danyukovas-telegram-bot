@@ -7,6 +7,11 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public class PingCommand implements Command {
 
     @Override
+    public String getCommandName() {
+        return "/ping";
+    }
+
+    @Override
     public String respMessage(Message message) {
         return "pong to " + message.getChat().getUserName();
     }

@@ -7,6 +7,11 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public class WrongCommand implements Command {
 
     @Override
+    public String getCommandName() {
+        return "default";
+    }
+
+    @Override
     public String respMessage(Message message) {
         return "Invalid command, " + message.getChat().getUserName() + ", please, enter the correct one";
     }
