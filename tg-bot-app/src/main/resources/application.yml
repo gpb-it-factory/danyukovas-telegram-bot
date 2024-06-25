@@ -1,2 +1,15 @@
-bot.token: "6934298417:AAG1KGCqK1zGq-vurdT483JUSF8R3Rpjo_0"
-bot.name: "DanGpbBot"
+bot:
+  token: "6934298417:AAG1KGCqK1zGq-vurdT483JUSF8R3Rpjo_0"
+  name: "DanGpbBot"
+
+httpclient:
+  maxConPerRoute: 20
+  maxConTotal: 50
+  connectionTimeoutMs: 5000
+  requestTimeoutMs: 30000
+
+user:
+  register-uri: http://localhost:8080/api/users
+
+server:
+  port: 8086
