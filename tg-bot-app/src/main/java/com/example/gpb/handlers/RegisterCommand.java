@@ -3,12 +3,14 @@ package com.example.gpb.handlers;
 import com.example.gpb.exceptions.ResourceAccessExceptionHandler;
 import com.example.gpb.gateways.MiddleServiceUserGateway;
 import com.example.gpb.models.CreateUserRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+@Slf4j
 @Component
 public class RegisterCommand implements Command {
 
@@ -28,6 +30,7 @@ public class RegisterCommand implements Command {
 
     @Override
     public String respMessage(Message message) {
+        log.info("Исполнение команды /register.");
         var userRequest = new CreateUserRequest(message.getChatId(), message.getChat().getUserName());
         try {
             return middleGateway.postRegisterUser(USER_REGISTER_URI, userRequest);

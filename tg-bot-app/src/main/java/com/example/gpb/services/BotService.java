@@ -2,6 +2,7 @@ package com.example.gpb.services;
 
 import com.example.gpb.handlers.Command;
 import com.example.gpb.factories.CommandFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+@Slf4j
 @Service
 public class BotService extends TelegramLongPollingBot {
 
@@ -31,14 +33,17 @@ public class BotService extends TelegramLongPollingBot {
             var message = update.getMessage();
             var newMessage = responseMessageBuilder(message);
             try {
+                log.info("Отправка сообщения с ответом в телеграм.");
                 sendApiMethod(newMessage);
             } catch (TelegramApiException e) {
+                log.error("Критическая ошибка при отправке сообщения в тг.");
                 throw new RuntimeException(e);
             }
         }
     }
 
     private SendMessage responseMessageBuilder(Message message) {
+        log.info("Формирование ответного сообщения.");
         Command command = commandFactory.getCommand(message.getText());
         return SendMessage.builder()
                 .chatId(message.getChatId())
