@@ -2,7 +2,6 @@ package com.example.gpb.handlers;
 
 import com.example.gpb.exceptions.ResourceAccessExceptionHandler;
 import com.example.gpb.gateways.MiddleServiceAccountGateway;
-import com.example.gpb.models.CreateAccountRequestV2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

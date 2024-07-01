@@ -12,6 +12,7 @@ user:
   register-uri: http://localhost:8080/api/users
   register-account-uri: http://localhost:8080/api/v2/users/{id}/accounts
   get-accounts-uri: http://localhost:8080/api/v2/users/{id}/accounts
+  transfers-uri: http://localhost:8080/api/v2/transfers
 
 server:
   port: 8086

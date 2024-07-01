@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Set;
 
 @Slf4j
@@ -30,8 +31,9 @@ public class CommandFactory {
         if (text == null) {
             return notTextCommand;
         }
+        String commandText = text.split(" ")[0];
         return commands.stream()
-                .filter(v -> v.getCommandName().equals(text))
+                .filter(v -> v.getCommandName().equals(commandText))
                 .findFirst()
                 .orElse(wrongCommand);
     }
