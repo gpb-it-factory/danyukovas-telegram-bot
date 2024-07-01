@@ -2,11 +2,13 @@ package com.example.gpb.factories;
 
 import com.example.gpb.handlers.*;
 import com.example.gpb.handlers.Command;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+@Slf4j
 @Component
 public class CommandFactory {
 
@@ -24,12 +26,13 @@ public class CommandFactory {
     }
 
     public Command getCommand(String text) {
-        if (text != null) {
-            return commands.stream()
-                    .filter(v -> v.getCommandName().equals(text))
-                    .findFirst()
-                    .orElse(wrongCommand);
+        log.info("Поиск нужной команды для исполнения.");
+        if (text == null) {
+            return notTextCommand;
         }
-        return notTextCommand;
+        return commands.stream()
+                .filter(v -> v.getCommandName().equals(text))
+                .findFirst()
+                .orElse(wrongCommand);
     }
 }
