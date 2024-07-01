@@ -33,7 +33,7 @@ public class BotService extends TelegramLongPollingBot {
             var message = update.getMessage();
             var newMessage = responseMessageBuilder(message);
             try {
-                log.info("Отправка сообщения с ответом в телеграм.");
+                log.info("Отправка сообщения с ответом в телеграм пользователю {}.", message.getChatId());
                 sendApiMethod(newMessage);
             } catch (TelegramApiException e) {
                 log.error("Критическая ошибка при отправке сообщения в тг.");
@@ -43,7 +43,7 @@ public class BotService extends TelegramLongPollingBot {
     }
 
     private SendMessage responseMessageBuilder(Message message) {
-        log.info("Формирование ответного сообщения.");
+        log.info("Формирование ответного сообщения пользователю {}.", message.getChatId());
         Command command = commandFactory.getCommand(message.getText());
         return SendMessage.builder()
                 .chatId(message.getChatId())
