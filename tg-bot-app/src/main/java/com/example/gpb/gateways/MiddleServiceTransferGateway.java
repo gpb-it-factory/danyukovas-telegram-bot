@@ -18,7 +18,7 @@ public class MiddleServiceTransferGateway {
     }
 
     public String postTransferRequest(String uri, CreateTransferRequest transfer) {
-        log.info("Запрос в middle сервис для выполнения перевода денег.");
+        log.info("Запрос в middle сервис для выполнения перевода денег c аккаунта пользователя {} на аккаунт пользователю {}.", transfer.from(), transfer.to());
         return restClient.post()
                 .uri(uri)
                 .body(transfer)

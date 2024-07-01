@@ -46,6 +46,7 @@ public class TransferCommand implements Command {
         if (amount.matches(NUM_REGEX)) {
             var transfer = new CreateTransferRequest(String.valueOf(message.getFrom().getId()), toAccount, new BigDecimal(amount));
             try {
+                log.info("Исполнение команды /transfer пользователем {}", message.getChatId());
                 return transferGateway.postTransferRequest(TRANSFER_URI, transfer);
             } catch (ResourceAccessException e) {
                 return new ResourceAccessExceptionHandler().handlerException();
