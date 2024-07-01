@@ -19,7 +19,7 @@ public class MiddleServiceAccountGateway {
     }
 
     public String postRegisterAccount(String uri, CreateAccountRequestV2 accountRequest, long id) throws ResourceAccessException {
-        log.info("Запрос в middle сервис для регистрации аккаунта.");
+        log.info("Запрос в middle сервис для регистрации аккаунта пользователя {}.", id);
         return restClient.post()
                 .uri(uri, id)
                 .body(accountRequest)
