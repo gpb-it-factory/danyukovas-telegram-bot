@@ -32,7 +32,7 @@ public class MiddleServiceAccountGateway {
     }
 
     public String getAllAccounts(String uri, long id) {
-        log.info("Запрос в middle сервис для получения всех аккаунтов пользователя.");
+        log.info("Запрос в middle сервис для получения всех аккаунтов пользователя {}.", id);
         return restClient.get()
                 .uri(uri, id)
                 .retrieve()

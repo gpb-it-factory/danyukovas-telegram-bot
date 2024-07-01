@@ -30,7 +30,7 @@ public class GetAccountsCommand implements Command {
 
     @Override
     public String respMessage(Message message) {
-        log.info("Исполнение команды /getAccounts.");
+        log.info("Исполнение команды /getAccounts пользователем {}.", message.getChatId());
         try {
             return middleAccountGateway.getAllAccounts(GET_ACCOUNTS_URI, message.getChatId());
         } catch (ResourceAccessException e) {
