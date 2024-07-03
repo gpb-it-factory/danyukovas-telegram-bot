@@ -36,7 +36,7 @@ class RegisterCommandTest {
     }
 
     @Test
-    public void test() {
+    public void whenSuccessPostRegisterUserTest() {
 
         var userRequest = new CreateUserRequest(message.getChatId(), message.getChat().getUserName());
         when(middleServiceUserGateway.postRegisterUser(null, userRequest)).thenReturn("Пользователь создан.");
@@ -48,7 +48,7 @@ class RegisterCommandTest {
     }
 
     @Test
-    public void test1() {
+    public void whenExceptionPostRegisterAccountTest() {
 
         var userRequest = new CreateUserRequest(message.getChatId(), message.getChat().getUserName());
         when(middleServiceUserGateway.postRegisterUser(null, userRequest)).thenThrow(ResourceAccessException.class);
