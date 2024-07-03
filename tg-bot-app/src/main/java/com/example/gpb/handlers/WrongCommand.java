@@ -15,7 +15,7 @@ public class WrongCommand implements Command {
 
     @Override
     public String respMessage(Message message) {
-        log.info("Формирование ответа сообщения при ненайденной команде.");
+        log.info("Формирование ответа сообщения при ненайденной команде, которую запросил пользователь {}.", message.getChatId());
         return "Invalid command, " + message.getChat().getUserName() + ", please, enter the correct one";
     }
 }

@@ -1,5 +1,6 @@
 package com.example.gpb.services;
 
+import com.example.gpb.exceptions.TelegramMessageSendException;
 import com.example.gpb.handlers.Command;
 import com.example.gpb.factories.CommandFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -33,17 +34,17 @@ public class BotService extends TelegramLongPollingBot {
             var message = update.getMessage();
             var newMessage = responseMessageBuilder(message);
             try {
-                log.info("Отправка сообщения с ответом в телеграм.");
+                log.info("Отправка сообщения с ответом в телеграм пользователю {}.", message.getChatId());
                 sendApiMethod(newMessage);
             } catch (TelegramApiException e) {
-                log.error("Критическая ошибка при отправке сообщения в тг.");
-                throw new RuntimeException(e);
+                log.error("Критическая ошибка при отправке сообщения в Telegram: {}", e.getMessage(), e);
+                throw new TelegramMessageSendException("Ошибка при отправке сообщения в Telegram", e);
             }
         }
     }
 
     private SendMessage responseMessageBuilder(Message message) {
-        log.info("Формирование ответного сообщения.");
+        log.info("Формирование ответного сообщения пользователю {}.", message.getChatId());
         Command command = commandFactory.getCommand(message.getText());
         return SendMessage.builder()
                 .chatId(message.getChatId())

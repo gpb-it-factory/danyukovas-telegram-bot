@@ -15,7 +15,7 @@ public class NotTextCommand implements Command {
 
     @Override
     public String respMessage(Message message) {
-        log.info("Формирование ответа сообщения при запросе не в виде текста.");
+        log.info("Формирование ответа сообщения при запросе не в виде текста пользователем {}.", message.getChatId());
         return message.getChat().getUserName() + ", please, send only text!";
     }
 }

@@ -15,7 +15,7 @@ public class StartCommand implements Command {
 
     @Override
     public String respMessage(Message message) {
-        log.info("Исполнение команды /start.");
+        log.info("Исполнение команды /start пользователем {}.", message.getChatId());
         return "Hello " + message.getChat().getFirstName() + "!";
     }
 }
