@@ -49,7 +49,7 @@ public class TransferCommand implements Command {
                 log.info("Исполнение команды /transfer пользователем {}", message.getChatId());
                 return transferGateway.postTransferRequest(TRANSFER_URI, transfer);
             } catch (ResourceAccessException e) {
-                return new ResourceAccessExceptionHandler().handlerException();
+                return new ResourceAccessExceptionHandler().handlerException(message);
             }
         } else {
             log.info("Пользователь: '{}' ввел неудовлетворительные данные : '{}'.", message.getChatId(), message.getText());

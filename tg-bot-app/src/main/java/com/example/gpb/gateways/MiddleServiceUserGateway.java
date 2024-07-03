@@ -1,6 +1,7 @@
 package com.example.gpb.gateways;
 
 import com.example.gpb.models.CreateUserRequest;
+import com.example.gpb.models.ResponseToFront;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,15 +20,12 @@ public class MiddleServiceUserGateway {
     }
 
     public String postRegisterUser(String uri, CreateUserRequest userRequest) throws ResourceAccessException {
-<<<<<<< feature/19
-        log.info("Запрос в middle сервис для получения ответа.");
-=======
         log.info("Запрос в middle сервис для регистрации аккаунта пользователя {}.", userRequest.userId());
->>>>>>> trunk
         return restClient.post()
                 .uri(uri)
                 .body(userRequest)
                 .retrieve()
-                .body(String.class);
+                .body(ResponseToFront.class)
+                .answer();
     }
 }

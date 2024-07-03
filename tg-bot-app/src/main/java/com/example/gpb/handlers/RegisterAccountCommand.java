@@ -36,7 +36,7 @@ public class RegisterAccountCommand implements Command {
         try {
             return middleAccountGateway.postRegisterAccount(ACCOUNT_REGISTER_URI, accountRequest, message.getChatId());
         } catch (ResourceAccessException e) {
-            return new ResourceAccessExceptionHandler().handlerException();
+            return new ResourceAccessExceptionHandler().handlerException(message);
         }
     }
 }

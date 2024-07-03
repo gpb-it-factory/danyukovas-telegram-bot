@@ -31,14 +31,8 @@ public class CommandFactory {
         if (text == null) {
             return notTextCommand;
         }
-<<<<<<< feature/19
-        String commandText = text.split(" ")[0];
-        return commands.stream()
-                .filter(v -> v.getCommandName().equals(commandText))
-=======
         return commands.stream()
                 .filter(v -> v.getCommandName().equals(text))
->>>>>>> trunk
                 .findFirst()
                 .orElse(wrongCommand);
     }

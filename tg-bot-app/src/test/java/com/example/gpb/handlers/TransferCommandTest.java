@@ -2,12 +2,14 @@ package com.example.gpb.handlers;
 
 import com.example.gpb.gateways.MiddleServiceTransferGateway;
 import com.example.gpb.models.CreateTransferRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.ResourceAccessException;
+import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 
@@ -25,10 +27,20 @@ class TransferCommandTest {
     @InjectMocks
     private TransferCommand command;
 
+    private Message message;
+
+    @BeforeEach
+    public void setUp() {
+        message = new Message();
+        Chat chat = new Chat();
+        chat.setId(1L);
+        chat.setUserName("Test");
+        message.setChat(chat);
+    }
+
     @Test
     public void whenFewerArgumentsTest() {
 
-        Message message = new Message();
         message.setText("/transfer");
 
         String res = command.respMessage(message);
@@ -40,7 +52,6 @@ class TransferCommandTest {
     @Test
     public void whenMoreArgumentsTest() {
 
-        Message message = new Message();
         message.setText("/transfer 123 123 123 123 1321 123 123 1231 31132");
 
         String res = command.respMessage(message);
@@ -52,7 +63,6 @@ class TransferCommandTest {
     @Test
     public void whenWrongTypeOfAmountArgumentTest() {
 
-        Message message = new Message();
         message.setText("/transfer test test");
 
         String res = command.respMessage(message);
@@ -64,7 +74,6 @@ class TransferCommandTest {
     @Test
     public void whenBothArgumentsWrongTest() {
 
-        Message message = new Message();
         message.setText("/transfer 1243 test");
 
         String res = command.respMessage(message);
@@ -76,7 +85,6 @@ class TransferCommandTest {
     @Test
     public void whenSuccessPostTransferRequestTest() {
 
-        var message = new Message();
         message.setFrom(new User(1L, "test", false));
         message.setText("/transfer user 1234.5");
         var transfer = new CreateTransferRequest("1", "user", new BigDecimal("1234.5"));
@@ -91,7 +99,6 @@ class TransferCommandTest {
     @Test
     public void whenExceptionPostTransferRequestTest() {
 
-        var message = new Message();
         message.setFrom(new User(1L, "test", false));
         message.setText("/transfer user 1234.5");
         var transfer = new CreateTransferRequest("1", "user", new BigDecimal("1234.5"));

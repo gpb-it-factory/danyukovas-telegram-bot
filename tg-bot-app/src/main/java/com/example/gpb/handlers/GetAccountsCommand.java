@@ -33,7 +33,7 @@ public class GetAccountsCommand implements Command {
         try {
             return middleAccountGateway.getAllAccounts(GET_ACCOUNTS_URI, message.getChatId());
         } catch (ResourceAccessException e) {
-            return new ResourceAccessExceptionHandler().handlerException();
+            return new ResourceAccessExceptionHandler().handlerException(message);
         }
     }
 }
