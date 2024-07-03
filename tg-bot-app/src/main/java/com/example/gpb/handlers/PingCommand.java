@@ -15,7 +15,11 @@ public class PingCommand implements Command {
 
     @Override
     public String respMessage(Message message) {
+<<<<<<< feature/19
         log.info("Исполнение команды /ping.");
+=======
+        log.info("Исполнение команды /ping пользователем {}.", message.getChatId());
+>>>>>>> trunk
         return "pong to " + message.getChat().getUserName();
     }
 }

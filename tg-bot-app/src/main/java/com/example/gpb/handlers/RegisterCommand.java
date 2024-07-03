@@ -30,12 +30,16 @@ public class RegisterCommand implements Command {
 
     @Override
     public String respMessage(Message message) {
+<<<<<<< feature/19
         log.info("Исполнение команды /register.");
+=======
+        log.info("Исполнение команды /register пользователем {}.", message.getChatId());
+>>>>>>> trunk
         var userRequest = new CreateUserRequest(message.getChatId(), message.getChat().getUserName());
         try {
             return middleGateway.postRegisterUser(USER_REGISTER_URI, userRequest);
         } catch (ResourceAccessException e) {
-            return new ResourceAccessExceptionHandler().handlerException();
+            return new ResourceAccessExceptionHandler().handlerException(message);
         }
     }
 }
