@@ -20,7 +20,7 @@ public class MiddleServiceUserGateway {
     }
 
     public String postRegisterUser(String uri, CreateUserRequest userRequest) throws ResourceAccessException {
-        log.info("Запрос в middle сервис для получения ответа.");
+        log.info("Запрос в middle сервис для регистрации аккаунта пользователя {}.", userRequest.userId());
         return restClient.post()
                 .uri(uri)
                 .body(userRequest)
