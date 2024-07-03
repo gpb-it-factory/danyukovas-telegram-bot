@@ -2,7 +2,6 @@ package com.example.gpb.handlers;
 
 import com.example.gpb.exceptions.ResourceAccessExceptionHandler;
 import com.example.gpb.gateways.MiddleServiceAccountGateway;
-import com.example.gpb.models.CreateAccountRequestV2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +33,7 @@ public class GetAccountsCommand implements Command {
         try {
             return middleAccountGateway.getAllAccounts(GET_ACCOUNTS_URI, message.getChatId());
         } catch (ResourceAccessException e) {
-            return new ResourceAccessExceptionHandler().handlerException();
+            return new ResourceAccessExceptionHandler().handlerException(message);
         }
     }
 }

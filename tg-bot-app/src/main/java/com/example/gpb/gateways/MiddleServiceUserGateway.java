@@ -1,6 +1,7 @@
 package com.example.gpb.gateways;
 
 import com.example.gpb.models.CreateUserRequest;
+import com.example.gpb.models.ResponseToFront;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,7 @@ public class MiddleServiceUserGateway {
                 .uri(uri)
                 .body(userRequest)
                 .retrieve()
-                .body(String.class);
+                .body(ResponseToFront.class)
+                .answer();
     }
 }
