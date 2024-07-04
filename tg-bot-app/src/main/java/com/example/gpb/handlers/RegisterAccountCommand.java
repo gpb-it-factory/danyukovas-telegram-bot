@@ -31,7 +31,7 @@ public class RegisterAccountCommand implements Command {
 
     @Override
     public String respMessage(Message message) {
-        log.info("Исполнение команды /regAccount.");
+        log.info("Исполнение команды /regAccount пользователем {}.", message.getChatId());
         var accountRequest = new CreateAccountRequestV2("Акционный");
         try {
             return middleAccountGateway.postRegisterAccount(ACCOUNT_REGISTER_URI, accountRequest, message.getChatId());
