@@ -16,13 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class RegisterAccountCommandTest {
+class GetAccountsCommandTest {
 
     @Mock
     MiddleServiceAccountGateway middleServiceAccountGateway;
 
     @InjectMocks
-    private RegisterAccountCommand command;
+    private GetAccountsCommand command;
 
     private Message message;
 
@@ -36,22 +36,20 @@ class RegisterAccountCommandTest {
     }
 
     @Test
-    public void whenSuccessPostRegisterAccountTest() {
+    public void whenSuccessGetAccountsTest() {
 
-        var accRequest = new CreateAccountRequestV2("Акционный");
-        when(middleServiceAccountGateway.postRegisterAccount(null, accRequest, 1L)).thenReturn("Аккаунт создан.");
+        when(middleServiceAccountGateway.getAllAccounts(null, 1L)).thenReturn("Список аккаунтов:");
 
         String res = command.respMessage(message);
-        String exp = "Аккаунт создан.";
+        String exp = "Список аккаунтов:";
 
         assertEquals(exp, res);
     }
 
     @Test
-    public void whenExceptionPostRegisterAccountTest() {
+    public void whenExceptionGetAccountsTest() {
 
-        var accRequest = new CreateAccountRequestV2("Акционный");
-        when(middleServiceAccountGateway.postRegisterAccount(null, accRequest, 1L)).thenThrow(ResourceAccessException.class);
+        when(middleServiceAccountGateway.getAllAccounts(null, 1L)).thenThrow(ResourceAccessException.class);
 
         String res = command.respMessage(message);
         String exp = """
@@ -62,4 +60,5 @@ class RegisterAccountCommandTest {
 
         assertEquals(exp, res);
     }
+
 }

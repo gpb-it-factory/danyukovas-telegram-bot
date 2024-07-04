@@ -2,7 +2,6 @@ package com.example.gpb.handlers;
 
 import com.example.gpb.exceptions.ResourceAccessExceptionHandler;
 import com.example.gpb.gateways.MiddleServiceAccountGateway;
-import com.example.gpb.models.CreateAccountRequestV2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,29 +11,27 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Slf4j
 @Component
-public class RegisterAccountCommand implements Command {
-
-    private final String ACCOUNT_REGISTER_URI;
+public class GetAccountsCommand implements Command {
+    private final String GET_ACCOUNTS_URI;
     private final MiddleServiceAccountGateway middleAccountGateway;
 
     @Autowired
-    public RegisterAccountCommand(@Value("${user.register-account-uri}") String userRegisterUri,
+    public GetAccountsCommand(@Value("${user.get-accounts-uri}") String userRegisterUri,
                                   MiddleServiceAccountGateway middleAccountGateway) {
         this.middleAccountGateway = middleAccountGateway;
-        this.ACCOUNT_REGISTER_URI = userRegisterUri;
+        this.GET_ACCOUNTS_URI = userRegisterUri;
     }
 
     @Override
     public String getCommandName() {
-        return "/regAccount";
+        return "/getAccounts";
     }
 
     @Override
     public String respMessage(Message message) {
-        log.info("Исполнение команды /regAccount пользователем {}.", message.getChatId());
-        var accountRequest = new CreateAccountRequestV2("Акционный");
+        log.info("Исполнение команды /getAccounts.");
         try {
-            return middleAccountGateway.postRegisterAccount(ACCOUNT_REGISTER_URI, accountRequest, message.getChatId());
+            return middleAccountGateway.getAllAccounts(GET_ACCOUNTS_URI, message.getChatId());
         } catch (ResourceAccessException e) {
             return new ResourceAccessExceptionHandler().handlerException(message);
         }

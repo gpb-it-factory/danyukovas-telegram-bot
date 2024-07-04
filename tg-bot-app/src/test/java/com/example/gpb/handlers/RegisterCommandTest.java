@@ -49,7 +49,6 @@ class RegisterCommandTest {
 
     @Test
     public void whenExceptionPostRegisterAccountTest() {
-
         var userRequest = new CreateUserRequest(message.getChatId(), message.getChat().getUserName());
         when(middleServiceUserGateway.postRegisterUser(null, userRequest)).thenThrow(ResourceAccessException.class);
 
@@ -62,5 +61,4 @@ class RegisterCommandTest {
 
         assertEquals(exp, res);
     }
-
 }

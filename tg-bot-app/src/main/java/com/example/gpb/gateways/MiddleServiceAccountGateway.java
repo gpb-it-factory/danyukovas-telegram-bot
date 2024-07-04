@@ -28,4 +28,13 @@ public class MiddleServiceAccountGateway {
                 .body(ResponseToFront.class)
                 .answer();
     }
+    
+    public String getAllAccounts(String uri, long id) {
+        log.info("Запрос в middle сервис для получения всех аккаунтов пользователя.");
+        return restClient.get()
+                .uri(uri, id)
+                .retrieve()
+                .body(ResponseToFront.class)
+                .answer();
+    }
 }
