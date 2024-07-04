@@ -1,6 +1,6 @@
 package com.example.gpb.gateways;
 
-import com.example.gpb.models.CreateUserRequest;
+import com.example.gpb.models.CreateAccountRequestV2;
 import com.example.gpb.models.ResponseToFront;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,20 +10,20 @@ import org.springframework.web.client.RestClient;
 
 @Slf4j
 @Component
-public class MiddleServiceUserGateway {
+public class MiddleServiceAccountGateway {
 
     private final RestClient restClient;
 
     @Autowired
-    public MiddleServiceUserGateway(RestClient restClient) {
+    public MiddleServiceAccountGateway(RestClient restClient) {
         this.restClient = restClient;
     }
 
-    public String postRegisterUser(String uri, CreateUserRequest userRequest) throws ResourceAccessException {
-        log.info("Запрос в middle сервис для регистрации аккаунта пользователя {}.", userRequest.userId());
+    public String postRegisterAccount(String uri, CreateAccountRequestV2 accountRequest, long id) throws ResourceAccessException {
+        log.info("Запрос в middle сервис для регистрации аккаунта пользователя {}.", id);
         return restClient.post()
-                .uri(uri)
-                .body(userRequest)
+                .uri(uri, id)
+                .body(accountRequest)
                 .retrieve()
                 .body(ResponseToFront.class)
                 .answer();
